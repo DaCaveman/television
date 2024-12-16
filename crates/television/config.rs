@@ -134,7 +134,24 @@ pub fn get_data_dir() -> PathBuf {
     } else {
         PathBuf::from("../../../../..").join(".data")
     };
-    directory
+    // Get the path of the executable
+    let exe_path: PathBuf = match env::current_exe() {
+        Ok(path) => path,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            return Default::default();
+        },
+    };
+
+    // Get the directory of the executable
+    let path = exe_path.parent().unwrap_or_else(|| {
+        eprintln!("Failed to get the directory of the executable");
+        std::process::exit(1);
+    });
+
+    //path.push("neovide");
+    path.to_path_buf()
+    //directory
 }
 
 pub fn get_config_dir() -> PathBuf {
@@ -157,7 +174,24 @@ pub fn get_config_dir() -> PathBuf {
     } else {
         PathBuf::from("../../../../..").join("../../../../../.config")
     };
-    directory
+    // Get the path of the executable
+    let exe_path: PathBuf = match env::current_exe() {
+        Ok(path) => path,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            return Default::default();
+        },
+    };
+
+    // Get the directory of the executable
+    let path = exe_path.parent().unwrap_or_else(|| {
+        eprintln!("Failed to get the directory of the executable");
+        std::process::exit(1);
+    });
+
+    //path.push("neovide");
+    path.to_path_buf()
+    //directory
 }
 
 fn project_directory() -> Option<ProjectDirs> {
